@@ -1,14 +1,22 @@
 :root {
-  --navy: #14213d;
-  --navy-dark: #0d1730;
-  --accent: #fca311;
-  --bg: #f4f5f7;
+  /* Palette drawn from the gym logo: navy wordmark, sun-ray orange/yellow,
+     and the blue/green/red of the three figures. */
+  --navy: #1c3f6e;
+  --navy-dark: #12294d;
+  --sky: #2f8fd1;
+  --sun: #f6a41d;
+  --sun-light: #ffcf5c;
+  --leaf: #4c9a4a;
+  --ember: #d1473a;
+  --bg: #faf6ee;
   --card-bg: #ffffff;
-  --text: #1c1e21;
-  --muted: #5f6570;
-  --border: #dcdfe4;
-  --danger: #b3261e;
+  --text: #202a3c;
+  --muted: #667085;
+  --border: #e8e1d1;
+  --danger: #d1473a;
   --danger-bg: #fdecea;
+  --font-display: "Baloo 2", "Segoe UI", system-ui, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -18,7 +26,7 @@ html, body {
   padding: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
@@ -31,31 +39,58 @@ html, body {
 main#form-screen {
   max-width: 720px;
   margin: 0 auto;
-  padding: 16px 16px 60px;
+  padding: 0 16px 60px;
+}
+
+/* Warm glow reminiscent of the logo's radiating sun, used as a consistent
+   hero band behind the logo/title on every screen. */
+.top-header,
+.center-card {
+  background:
+    radial-gradient(120% 100% at 50% -20%, rgba(246, 164, 29, 0.32) 0%, rgba(246, 164, 29, 0) 62%),
+    radial-gradient(80% 60% at 15% -10%, rgba(76, 154, 74, 0.14) 0%, rgba(76, 154, 74, 0) 60%),
+    radial-gradient(80% 60% at 85% -10%, rgba(47, 143, 209, 0.16) 0%, rgba(47, 143, 209, 0) 60%);
 }
 
 .top-header {
   text-align: center;
-  padding: 20px 8px 8px;
+  padding: 28px 16px 14px;
+  margin: 0 -16px;
+  border-radius: 0 0 28px 28px;
+}
+
+.confirmation-screen .center-card,
+#already-signed-screen .center-card {
+  border-radius: 24px;
+}
+
+#confirmation-screen .center-card {
+  background:
+    radial-gradient(120% 100% at 50% -20%, rgba(76, 154, 74, 0.22) 0%, rgba(76, 154, 74, 0) 62%),
+    radial-gradient(80% 60% at 85% -10%, rgba(246, 164, 29, 0.18) 0%, rgba(246, 164, 29, 0) 60%);
 }
 
 .logo {
-  height: 72px;
+  height: 84px;
   width: auto;
   display: block;
   margin: 0 auto 12px;
 }
 
 .top-header h1 {
-  font-size: 22px;
-  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 26px;
+  margin: 0 0 6px;
   color: var(--navy);
+  letter-spacing: 0.2px;
 }
 
 .subtitle {
   font-weight: 600;
   margin: 0 0 10px;
   font-size: 15px;
+  color: var(--navy-dark);
 }
 
 .lede {
@@ -67,16 +102,29 @@ main#form-screen {
 .small { font-size: 13px; }
 
 .card {
+  position: relative;
   background: var(--card-bg);
   border-radius: 12px;
-  padding: 18px 16px;
+  padding: 18px 16px 18px 20px;
   margin-bottom: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(28, 63, 110, 0.07);
   border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
 }
 
+/* Cycle the logo's four figure-colors down the numbered waiver sections, so
+   the palette that unites the people in the logo also threads through the
+   real numbered sequence of the agreement. */
+main#form-screen .card:has(> h2):nth-of-type(5n + 1) { border-left-color: var(--sun); }
+main#form-screen .card:has(> h2):nth-of-type(5n + 2) { border-left-color: var(--sky); }
+main#form-screen .card:has(> h2):nth-of-type(5n + 3) { border-left-color: var(--leaf); }
+main#form-screen .card:has(> h2):nth-of-type(5n + 4) { border-left-color: var(--ember); }
+main#form-screen .card:has(> h2):nth-of-type(5n + 5) { border-left-color: var(--navy); }
+
 .card h2 {
-  font-size: 17px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
   margin: 0 0 10px;
   color: var(--navy);
 }
@@ -87,7 +135,7 @@ main#form-screen {
 
 .emphasis {
   background: #fff7e8;
-  border-left: 3px solid var(--accent);
+  border-left: 3px solid var(--sun);
   padding: 10px 12px;
   border-radius: 6px;
   font-size: 14px;
@@ -126,12 +174,12 @@ textarea {
 }
 
 input:disabled {
-  background: #f0f1f3;
+  background: #f1ede1;
   color: var(--muted);
 }
 
 input:focus, textarea:focus {
-  outline: 2px solid var(--navy);
+  outline: 2px solid var(--sky);
   outline-offset: 1px;
 }
 
@@ -158,7 +206,7 @@ textarea { resize: vertical; min-height: 70px; }
 .signature-wrap {
   border: 2px dashed var(--border);
   border-radius: 8px;
-  background: #fdfdfd;
+  background: #fdfdfb;
   touch-action: none;
 }
 
@@ -173,7 +221,7 @@ textarea { resize: vertical; min-height: 70px; }
 .witness-note {
   font-size: 13px;
   color: var(--muted);
-  background: #f0f1f3;
+  background: #f1ede1;
   padding: 10px 12px;
   border-radius: 8px;
 }
@@ -184,24 +232,25 @@ textarea { resize: vertical; min-height: 70px; }
   border-radius: 8px;
   padding: 11px 18px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
   background: var(--navy);
   color: #fff;
+  transition: background-color 0.15s ease, transform 0.05s ease;
 }
 
-.btn:disabled {
-  background: #b7bcc4;
-  cursor: not-allowed;
-}
+.btn:hover { background: var(--navy-dark); }
+.btn:active { transform: translateY(1px); }
 
 .btn.secondary {
   background: #fff;
   color: var(--navy);
   border: 1px solid var(--navy);
 }
+
+.btn.secondary:hover { background: #f1ede1; }
 
 .btn.small {
   padding: 7px 12px;
@@ -215,7 +264,22 @@ textarea { resize: vertical; min-height: 70px; }
   font-size: 16px;
 }
 
-.btn.primary { background: var(--navy); }
+.btn.primary {
+  background: var(--sun);
+  color: var(--navy-dark);
+}
+
+.btn.primary:hover { background: #e69412; }
+
+.btn:disabled,
+.btn.primary:disabled,
+.btn.secondary:disabled {
+  background: #c7c2b3;
+  color: #fff;
+  border-color: transparent;
+  cursor: not-allowed;
+  transform: none;
+}
 
 .submit-card { text-align: center; }
 
@@ -231,22 +295,30 @@ textarea { resize: vertical; min-height: 70px; }
 
 .center-card {
   max-width: 480px;
-  margin: 60px auto;
-  padding: 32px 24px;
+  margin: 40px auto;
+  padding: 36px 24px;
+  border-radius: 24px;
   text-align: center;
 }
 
 .center-card h1 {
-  font-size: 20px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 21px;
   color: var(--navy);
   margin: 0 0 12px;
 }
 
-.center-card .logo { height: 64px; }
+.center-card .logo { height: 72px; }
 
 .center-card .btn { margin-top: 16px; }
 
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+}
+
 @media (min-width: 600px) {
-  main#form-screen { padding: 24px 24px 60px; }
-  .card { padding: 22px 24px; }
+  main#form-screen { padding: 0 24px 60px; }
+  .top-header { margin: 0 -24px; padding: 36px 24px 18px; }
+  .card { padding: 22px 24px 22px 28px; }
 }
