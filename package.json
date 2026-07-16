@@ -1,0 +1,7 @@
+{
+  "name": "edenvale-gym-waiver",
+  "version": "1.0.0",
+  "description": "Digital liability waiver signing app for Edenvale Community Gym (static site, GitHub Pages)",
+  "license": "UNLICENSED",
+  "private": true
+}
