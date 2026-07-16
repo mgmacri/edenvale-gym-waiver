@@ -77,10 +77,23 @@ function validateSubmission(body) {
   return errors;
 }
 
+// Avoids DriveApp.getFoldersByName, which searches the whole Drive and needs
+// broader (drive.readonly/drive) scope. Caching the created folder's id keeps
+// every lookup scoped to a file this script itself created, which drive.file
+// permits.
 function getOrCreateFolder(name) {
-  const folders = DriveApp.getFoldersByName(name);
-  if (folders.hasNext()) return folders.next();
-  return DriveApp.createFolder(name);
+  const props = PropertiesService.getScriptProperties();
+  const cachedId = props.getProperty('FOLDER_ID');
+  if (cachedId) {
+    try {
+      return DriveApp.getFolderById(cachedId);
+    } catch (err) {
+      // Cached folder was deleted/moved out of reach; fall through and recreate.
+    }
+  }
+  const folder = DriveApp.createFolder(name);
+  props.setProperty('FOLDER_ID', folder.getId());
+  return folder;
 }
 
 function jsonResponse(obj) {

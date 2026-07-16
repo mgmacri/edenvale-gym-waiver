@@ -2,7 +2,8 @@
   const STORAGE_KEY = 'edenvale-waiver-signed';
 
   // Set after deploying google-apps-script/Code.gs as a Web App (see README.md).
-  const APPS_SCRIPT_URL = 'REPLACE_WITH_YOUR_APPS_SCRIPT_WEB_APP_URL';
+  const APPS_SCRIPT_URL =
+    'https://script.google.com/macros/s/AKfycbwxzXHaOMjH2XAe0ymWDVRrF9nIsnIsKAqCqsATfKCGjo_QTNKEHJ14JxbONYLJUgOj/exec';
   // Must match the SHARED_SECRET script property set on the Apps Script project.
   const SHARED_SECRET = '3644de9ad9432fd93639e3d07ab7a148';
 
