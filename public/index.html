@@ -13,6 +13,10 @@
 </head>
 <body>
 
+<div class="page-shell">
+<aside class="side-panel side-panel--left" aria-hidden="true"></aside>
+<div class="page-center">
+
 <!-- Already-signed screen -->
 <section id="already-signed-screen" class="screen hidden">
   <div class="card center-card">
@@ -38,8 +42,7 @@
 <!-- Main form -->
 <main id="form-screen" class="screen">
   <header class="top-header">
-    <img src="edenvale-logo.svg" alt="Edenvale Community Gym" class="logo" />
-    <h1>Edenvale Community Gym</h1>
+    <img src="edenvale-logo.svg" alt="Edenvale Community Gym" class="logo logo--hero" />
     <p class="subtitle">Assumption of Risk, Waiver of Liability, and Release Agreement</p>
     <p class="lede">Please complete this waiver before your first visit to the gym.</p>
     <p class="lede muted">Estimated completion time: ~3–5 minutes</p>
@@ -297,6 +300,10 @@
     </div>
   </form>
 </main>
+
+</div>
+<aside class="side-panel side-panel--right" aria-hidden="true"></aside>
+</div>
 
 <script src="vendor/pdf-lib.min.js"></script>
 <script src="pdf-generator.js"></script>

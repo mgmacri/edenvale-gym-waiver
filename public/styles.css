@@ -36,6 +36,11 @@ html, body {
 
 .screen { min-height: 100vh; }
 
+/* Mobile-first: no side furniture, just the stacked screens. */
+.page-shell { display: block; }
+.page-center { display: block; min-width: 0; }
+.side-panel { display: none; }
+
 main#form-screen {
   max-width: 720px;
   margin: 0 auto;
@@ -78,19 +83,19 @@ main#form-screen {
   filter: drop-shadow(0 3px 6px rgba(28, 63, 110, 0.18));
 }
 
-.top-header h1 {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 26px;
-  margin: 0 0 6px;
-  color: var(--navy);
-  letter-spacing: 0.2px;
+/* The logo already carries the wordmark, so it's the hero on the main
+   form screen — sized up since there's no redundant heading competing
+   with it. */
+.logo--hero {
+  height: 160px;
+  margin-bottom: 8px;
 }
 
 .subtitle {
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-weight: 700;
   margin: 0 0 10px;
-  font-size: 15px;
+  font-size: 17px;
   color: var(--navy-dark);
 }
 
@@ -322,4 +327,57 @@ textarea { resize: vertical; min-height: 70px; }
   main#form-screen { padding: 0 24px 60px; }
   .top-header { margin: 0 -24px; padding: 36px 24px 18px; }
   .card { padding: 22px 24px 22px 28px; }
+}
+
+@media (min-width: 700px) {
+  .logo--hero { height: 200px; }
+}
+
+/* Desktop: frame the form with two decorative panels that carry a large,
+   frosted-glass rendering of the logo. Grid stretch makes each panel match
+   whatever the current screen's real content height is (short confirmation
+   card vs. the full multi-page form), with no JS measuring needed. */
+@media (min-width: 1180px) {
+  .page-shell {
+    display: grid;
+    grid-template-columns: minmax(140px, 1fr) minmax(0, 760px) minmax(140px, 1fr);
+    align-items: stretch;
+    gap: 28px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 28px 28px 60px;
+  }
+
+  .side-panel {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.38);
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(28, 63, 110, 0.07);
+  }
+
+  /* Tiled rather than single-centered, so the frosted logo fills whatever
+     height the current screen's content actually is — a couple of repeats
+     on the short confirmation card, many down the full multi-page form. */
+  .side-panel::before {
+    content: "";
+    position: absolute;
+    inset: -10% -30%;
+    background-image: url("edenvale-logo.svg");
+    background-repeat: repeat-y;
+    background-position: top center;
+    background-size: 260px 272px;
+    filter: blur(10px) saturate(115%);
+    opacity: 0.34;
+  }
+
+  .side-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.4));
+    backdrop-filter: blur(1px);
+  }
 }
