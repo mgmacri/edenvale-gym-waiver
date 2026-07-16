@@ -71,10 +71,11 @@ main#form-screen {
 }
 
 .logo {
-  height: 84px;
+  height: 108px;
   width: auto;
   display: block;
   margin: 0 auto 12px;
+  filter: drop-shadow(0 3px 6px rgba(28, 63, 110, 0.18));
 }
 
 .top-header h1 {
@@ -309,7 +310,7 @@ textarea { resize: vertical; min-height: 70px; }
   margin: 0 0 12px;
 }
 
-.center-card .logo { height: 72px; }
+.center-card .logo { height: 92px; }
 
 .center-card .btn { margin-top: 16px; }
 

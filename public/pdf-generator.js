@@ -1,7 +1,7 @@
 (function (global) {
   const { PDFDocument, StandardFonts, rgb } = PDFLib;
 
-  const LOGO_URL = 'edenvale-logo.png';
+  const LOGO_URL = 'edenvale-logo-transparent.png';
 
   const PAGE_WIDTH = 612;
   const PAGE_HEIGHT = 792;
