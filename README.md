@@ -78,17 +78,21 @@ Script once, under your own Google account:
    the contents of `google-apps-script/Code.gs`.
 2. In the editor, open **Project Settings** (gear icon) → check "Show `appsscript.json`
    manifest file in editor" → open that file → replace its contents with
-   `google-apps-script/appsscript.json` from this repo. This pins the OAuth scopes to the
-   minimum needed (`script.send_mail` + `drive.file`, not the full Drive scope) — without
-   this, Apps Script defaults to the broad Drive scope, which Google classifies as
-   "restricted" and can hard-block authorization on personal accounts with no bypass option
-   ("This app tried to access sensitive info... blocked").
+   `google-apps-script/appsscript.json` from this repo. Note: this script uses the built-in
+   `DriveApp` service (`createFolder`/`getFolderById`), which structurally requires the full
+   `https://www.googleapis.com/auth/drive` scope — `drive.file` only works with the newer
+   Advanced Drive API service, not `DriveApp`. If Apps Script's default (non-Cloud-linked)
+   project hard-blocks authorization for this scope with no bypass option ("This app tried
+   to access sensitive info... blocked"), switch the script to an explicit Google Cloud
+   project first (Project Settings → Google Cloud Platform (GCP) Project → Change project →
+   a project number from a project you create at console.cloud.google.com), configure that
+   project's OAuth consent screen (External, Testing) and add yourself as a **Test user** —
+   being a listed test user on a real GCP project is what allows authorization to proceed.
 3. Project Settings → Script Properties → add `SHARED_SECRET` with the same value as the
    `SHARED_SECRET` constant in `public/app.js` (a random token is pre-filled there; change
    it in both places if you want a different one).
 4. Deploy → New deployment → type **Web app** → Execute as **Me**, Who has access
-   **Anyone**. Authorize when prompted — with the narrowed scopes above this should show a
-   normal consent screen rather than a hard block. Copy the resulting `/exec` URL.
+   **Anyone**. Authorize when prompted. Copy the resulting `/exec` URL.
 5. Paste that URL into `APPS_SCRIPT_URL` at the top of `public/app.js`, commit, and push.
 6. To browse past waivers, just open the "Edenvale Waivers" folder in your Google Drive —
    there is no admin panel anymore.
