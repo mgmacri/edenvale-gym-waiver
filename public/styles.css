@@ -333,51 +333,49 @@ textarea { resize: vertical; min-height: 70px; }
   .logo--hero { height: 200px; }
 }
 
-/* Desktop: frame the form with two decorative panels that carry a large,
-   frosted-glass rendering of the logo. Grid stretch makes each panel match
-   whatever the current screen's real content height is (short confirmation
-   card vs. the full multi-page form), with no JS measuring needed. */
+/* Desktop: frame the form with full-bleed frosted-glass panels — soft,
+   ambient color blobs in the logo's own palette, blurred well beyond
+   recognizability, seen through a glass overlay. Grid stretch makes each
+   panel match whatever the current screen's real content height is (short
+   confirmation card vs. the full multi-page form), with no JS measuring. */
 @media (min-width: 1180px) {
   .page-shell {
     display: grid;
-    grid-template-columns: minmax(140px, 1fr) minmax(0, 760px) minmax(140px, 1fr);
+    grid-template-columns: 1fr minmax(0, 760px) 1fr;
     align-items: stretch;
-    gap: 28px;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 28px 28px 60px;
   }
+
+  .page-center { padding: 28px 32px 60px; }
 
   .side-panel {
     display: block;
     position: relative;
     overflow: hidden;
-    border-radius: 28px;
-    background: rgba(255, 255, 255, 0.38);
-    border: 1px solid var(--border);
-    box-shadow: 0 1px 3px rgba(28, 63, 110, 0.07);
+    background: rgba(255, 255, 255, 0.3);
   }
 
-  /* Tiled rather than single-centered, so the frosted logo fills whatever
-     height the current screen's content actually is — a couple of repeats
-     on the short confirmation card, many down the full multi-page form. */
   .side-panel::before {
     content: "";
     position: absolute;
-    inset: -10% -30%;
-    background-image: url("edenvale-logo.svg");
-    background-repeat: repeat-y;
-    background-position: top center;
-    background-size: 260px 272px;
-    filter: blur(10px) saturate(115%);
-    opacity: 0.34;
+    inset: 0;
+    background:
+      radial-gradient(46% 30% at 24% 14%, var(--sun-light) 0%, transparent 72%),
+      radial-gradient(38% 26% at 80% 32%, var(--sky) 0%, transparent 74%),
+      radial-gradient(42% 30% at 26% 64%, var(--leaf) 0%, transparent 74%),
+      radial-gradient(34% 24% at 78% 82%, var(--ember) 0%, transparent 72%),
+      radial-gradient(50% 34% at 50% 102%, var(--sun) 0%, transparent 76%);
+    filter: blur(60px) saturate(130%);
+    opacity: 0.55;
   }
+
+  .side-panel--left::before { inset: 0 -40% 0 0; }
+  .side-panel--right::before { inset: 0 0 0 -40%; }
 
   .side-panel::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.4));
-    backdrop-filter: blur(1px);
+    background: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(24px);
   }
 }
