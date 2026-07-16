@@ -345,7 +345,15 @@ textarea { resize: vertical; min-height: 70px; }
     align-items: stretch;
   }
 
-  .page-center { padding: 28px 32px 60px; }
+  /* Wide-radius panel; the blend into the fog glass is handled entirely on
+     the side panels' own inner edge (below) rather than here, so nothing
+     ever paints over the card content. */
+  .page-center {
+    position: relative;
+    padding: 28px 32px 60px;
+    background: var(--bg);
+    border-radius: 40px;
+  }
 
   .side-panel {
     display: block;
@@ -354,6 +362,8 @@ textarea { resize: vertical; min-height: 70px; }
     background: rgba(255, 255, 255, 0.3);
   }
 
+  /* Muted/pastel rather than vivid — desaturated well below the source
+     palette so the blobs read as soft ambient color, not a bright accent. */
   .side-panel::before {
     content: "";
     position: absolute;
@@ -364,8 +374,8 @@ textarea { resize: vertical; min-height: 70px; }
       radial-gradient(42% 30% at 26% 64%, var(--leaf) 0%, transparent 74%),
       radial-gradient(34% 24% at 78% 82%, var(--ember) 0%, transparent 72%),
       radial-gradient(50% 34% at 50% 102%, var(--sun) 0%, transparent 76%);
-    filter: blur(60px) saturate(130%);
-    opacity: 0.55;
+    filter: blur(60px) saturate(65%);
+    opacity: 0.5;
   }
 
   .side-panel--left::before { inset: 0 -40% 0 0; }
@@ -377,5 +387,20 @@ textarea { resize: vertical; min-height: 70px; }
     inset: 0;
     background: rgba(255, 255, 255, 0.22);
     backdrop-filter: blur(24px);
+  }
+
+  /* Fades this panel's own inner edge (the one touching the form column)
+     into solid page background, so the seam reads as a blend rather than
+     a hard cut — self-contained, so it can't ever paint over card content. */
+  .side-panel--left::after {
+    background:
+      linear-gradient(to right, transparent 0%, transparent 65%, var(--bg) 100%),
+      rgba(255, 255, 255, 0.22);
+  }
+
+  .side-panel--right::after {
+    background:
+      linear-gradient(to left, transparent 0%, transparent 65%, var(--bg) 100%),
+      rgba(255, 255, 255, 0.22);
   }
 }
