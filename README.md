@@ -76,17 +76,34 @@ Script once, under your own Google account:
 
 1. Go to [script.google.com](https://script.google.com), create a new project, and paste in
    the contents of `google-apps-script/Code.gs`.
-2. Project Settings (gear icon) → Script Properties → add `SHARED_SECRET` with the same
-   value as the `SHARED_SECRET` constant in `public/app.js` (a random token is pre-filled
-   there; change it in both places if you want a different one).
-3. Deploy → New deployment → type **Web app** → Execute as **Me**, Who has access
-   **Anyone**. Copy the resulting `/exec` URL.
-4. Paste that URL into `APPS_SCRIPT_URL` at the top of `public/app.js`, commit, and push.
-5. To browse past waivers, just open the "Edenvale Waivers" folder in your Google Drive —
+2. In the editor, open **Project Settings** (gear icon) → check "Show `appsscript.json`
+   manifest file in editor" → open that file → replace its contents with
+   `google-apps-script/appsscript.json` from this repo. This pins the OAuth scopes to the
+   minimum needed (`script.send_mail` + `drive.file`, not the full Drive scope) — without
+   this, Apps Script defaults to the broad Drive scope, which Google classifies as
+   "restricted" and can hard-block authorization on personal accounts with no bypass option
+   ("This app tried to access sensitive info... blocked").
+3. Project Settings → Script Properties → add `SHARED_SECRET` with the same value as the
+   `SHARED_SECRET` constant in `public/app.js` (a random token is pre-filled there; change
+   it in both places if you want a different one).
+4. Deploy → New deployment → type **Web app** → Execute as **Me**, Who has access
+   **Anyone**. Authorize when prompted — with the narrowed scopes above this should show a
+   normal consent screen rather than a hard block. Copy the resulting `/exec` URL.
+5. Paste that URL into `APPS_SCRIPT_URL` at the top of `public/app.js`, commit, and push.
+6. To browse past waivers, just open the "Edenvale Waivers" folder in your Google Drive —
    there is no admin panel anymore.
 
 Redeploying `Code.gs` after edits requires **Deploy → Manage deployments → Edit → New
 version** (a plain save does not update the live `/exec` endpoint).
+
+### If authorization is still fully blocked with no "Advanced" option
+
+That specific hard block (no bypass link at all) usually means **Advanced Protection
+Program** is turned on for the Google account — it blocks all non-Google-verified app
+authorization outright, regardless of scopes. Check
+[myaccount.google.com/advanced-protection](https://myaccount.google.com/advanced-protection).
+If it's on, either turn it off temporarily for this account, or deploy from a different
+personal Google account that doesn't have it enabled.
 
 ## Local development / verification
 
